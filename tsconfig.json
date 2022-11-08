@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "removeComments": false,
+    "baseUrl": ".",
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "lib": ["DOM"],
+    "declarationDir": "./dist/",
+    "outDir": "./dist/",
+  },
+  "exclude": [
+    "./node_modules",
+    "./dist"
+  ]
+}
