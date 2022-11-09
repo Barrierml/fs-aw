@@ -20,7 +20,7 @@ npm install fs-aw
 ### 在H5项目中使用
 ```js
 // 主文件默认导出为web平台
-import fsAw from 'fs-aw';
+import * as fsAw from 'fs-aw/dist/index.miniapp';
 const main = async () => {
     await fsAw.writeFile('/test/test.txt', 123);
     const content = await fsAw.readFile('/test/test.txt', 'utf8');
@@ -33,7 +33,9 @@ main();
 ### 在小程序项目中使用
 ```js
 // 引入小程序专用抽象层
-import fsAw from 'fs-aw/miniapp';
+// 推荐使用这种引入写法，如果无法引入则使用第二种引入方法
+// import * as fsAw from 'fs-aw/miniapp';
+import * as fsAw from 'fs-aw/dist/index.miniapp';
 const main = async () => {
     await fsAw.writeFile('/test/test.txt', 123);
     const content = await fsAw.readFile('/test/test.txt', 'utf8');
