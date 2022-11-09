@@ -20,7 +20,7 @@ const config = [
                 format: 'cjs',
             },
             {
-                file: './dist/index.esm.js',
+                file: './dist/index.es.js',
                 format: 'es',
             },
         ]

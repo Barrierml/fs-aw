@@ -1,9 +1,23 @@
 {
   "name": "fs-aw",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "File system abstraction layer for the browser, Node, miniapp",
-  "main": "index.js",
   "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./miniapp": {
+      "import": "./dist/index.miniapp.es.js",
+      "require": "./dist/index.miniapp.js",
+      "types": "./dist/index.miniapp.d.ts"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Barrierml/fs-aw"
