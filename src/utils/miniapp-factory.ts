@@ -4,6 +4,7 @@ const getCurrentFactory = (): [any, string] => {
     let baseUrl: string = '';
     if (typeof wx !== 'undefined') {
         factory = wx;
+        baseUrl = wx.env.USER_DATA_PATH;
     } else if (typeof my !== 'undefined') {
         factory = my;
         baseUrl = my.env.USER_DATA_PATH;

@@ -37,7 +37,10 @@ const getFileSystemManager = () => {
     }
     return factory.getFileSystemManager();
 }
-const getFullName = (fileName: string) => BASE_URL + fileName;
+
+const getFullName = (fileName: string) => {
+    `${BASE_URL}${fileName.startsWith('/') ? fileName : `/${fileName}`}`;
+}
 
 const readFile = async (fileName: string, encoding?: EncodingStringType) => {
     asserAbsolutePath(fileName);
