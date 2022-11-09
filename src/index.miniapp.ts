@@ -1,5 +1,5 @@
 import { asserAbsolutePath } from "./utils";
-import { EncodingType } from './index';
+import type { EncodingStringType, Stat } from './index';
 import { getCurrentFactory } from "./utils/miniapp-factory";
 
 interface Factory {
@@ -39,7 +39,7 @@ const getFileSystemManager = () => {
 }
 const getFullName = (fileName: string) => BASE_URL + fileName;
 
-const readFile = async (fileName: string, encoding?: EncodingType) => {
+const readFile = async (fileName: string, encoding?: EncodingStringType) => {
     asserAbsolutePath(fileName);
     const fs = getFileSystemManager();
     return new Promise((resolve, fail) => {
@@ -175,7 +175,7 @@ const exists = async (fileName: string): Promise<boolean> => {
     });
 }
 
-const stat = async (fileName: string): Promise<any> => {
+const stat = async (fileName: string): Promise<Stat> => {
     asserAbsolutePath(fileName);
     const fs = getFileSystemManager();
     return new Promise((resolve, fail) => {

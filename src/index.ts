@@ -21,6 +21,8 @@ export enum EncodingType {
   base64 = 'base64',
 }
 
+export type EncodingStringType = 'utf8' | 'utf-8' | 'base64';
+
 interface OSObject<T = any> {
   type: OSObjectType;
   name: string;
@@ -98,7 +100,7 @@ const readFrom = async (fileName: string): Promise<OSObject> => {
   });
 };
 
-const readFile = async (fileName: string, encoding?: EncodingType) => {
+const readFile = async (fileName: string, encoding?: EncodingStringType) => {
   asserAbsolutePath(fileName);
   let data = await readFrom(fileName);
   const content = data.data;
@@ -146,7 +148,7 @@ const removeFile = async (fileName: string): Promise<boolean> => {
   });
 };
 
-const readdir = async (directoryName: string, options?: { withFileTypes?: boolean }): Promise<DirectoryEntry[]> => {
+const readdir = async (directoryName: string, options?: { withFileTypes?: boolean }): Promise<Stat [] | string []> => {
   asserAbsolutePath(directoryName);
   const dir = path.withTrailingSlash(directoryName);
 
@@ -179,7 +181,7 @@ const readdir = async (directoryName: string, options?: { withFileTypes?: boolea
   });
 };
 
-interface Stat {
+export interface Stat {
   isFile(): boolean;
   isDirectory(): boolean;
 }
@@ -231,7 +233,7 @@ const mkdir = async (fullPath: string): Promise<boolean> => {
   });
 };
 
-const rmdir = async (fullPath: string) => {
+const rmdir = async (fullPath: string): Promise<boolean> => {
   asserAbsolutePath(fullPath);
   const delList = await readdir(fullPath, { withFileTypes: true });
   if (!delList || !delList.length) {
