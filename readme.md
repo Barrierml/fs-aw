@@ -3,6 +3,9 @@
 Multiterminal fs abstraction layer
 由`Typescript`编写的一个多平台文件系统抽象层，帮助你在不同的平台，使用同一套逻辑操作文件系统
 
+使用场景
+1. 在使用`Taro` 或者 `uniapp` 开发多平台跨端应用时，碰到一些大文件(大于5MB)的缓存需求，但因为web、小程序、weex等平台的文件操作API，或者是根本没有相关的文件缓存API，一切都需要需要重新设计实现，`fs-aw` 提供了一套行为完全一致的文件系统，借鉴 `node` 的 `fs` 模块实现的前端工具库，帮助你快速的在不同的平台拥有一个文件管理系统。
+2. 补充ing
 ## 快速开始
 
 ### 安装
@@ -10,9 +13,13 @@ Multiterminal fs abstraction layer
 ```shell
 npm install fs-aw
 ```
-> ⚠️注意：fs-aw 因为跨平台统一api的原因，只支持异步调用！
+
+
+> ⚠️注意：`fs-aw` 因为跨平台统一api的原因，只支持异步调用！
+> `fs-aw`设计为按需引入，请根据你当前的平台自行选择抽象层，所有平台的API行为均一致
 ### 在H5项目中使用
 ```js
+// 主文件默认导出为web平台
 import fsAw from 'fs-aw';
 const main = async () => {
     await fsAw.writeFile('/test/test.txt', 123);
@@ -25,8 +32,8 @@ main();
 
 ### 在小程序项目中使用
 ```js
-// 为了保证引入项目最小的体积，可以根据不同的平台选用不同的抽象层，但是所有平台的API行为都是完全相同的
-import fsAw from 'fs-aw/index.miniapp';
+// 引入小程序专用抽象层
+import fsAw from 'fs-aw/miniapp';
 const main = async () => {
     await fsAw.writeFile('/test/test.txt', 123);
     const content = await fsAw.readFile('/test/test.txt', 'utf8');
@@ -45,9 +52,10 @@ main();
 | 支付宝小程序  | ✅ |✅|`FileSystemManager`|
 | 微信小程序  | ✅ |❌|`FileSystemManager`|
 | 字节小程序  | ✅ |❌|`FileSystemManager`|
-| 小程序  | ✅ |❌|`FileSystemManager`|
-| node  | ❌ |❌|`fs`模块|
+| 百度小程序  | ✅ |❌|`FileSystemManager`|
 | Weex | ❌| ❌ | `localStorage`|
+| node  | ❌ |❌|`fs`模块|
+
 
 > 还有很多常用的JS平台与常用的API没有实现，欢迎大家共建
 
