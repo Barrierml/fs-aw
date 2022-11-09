@@ -1,4 +1,4 @@
-import * as fsAw from '../dist/index';
+import * as fsAw from '../dist/index.esm';
 import * as assert from 'assert';
 
 describe('fs-aw-web', () => {

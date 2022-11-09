@@ -17,16 +17,26 @@ const config = [
         output: [
             {
                 file: './dist/index.js',
+                format: 'cjs',
+            },
+            {
+                file: './dist/index.esm.js',
                 format: 'es',
             },
         ]
     },
     {
         input: './src/index.miniapp.ts',
-        output: {
-            file: './dist/index.miniapp.js',
-            format: 'es',
-        }
+        output: [
+            {
+                file: './dist/index.miniapp.js',
+                format: 'cjs',
+            },
+            {
+                file: './dist/index.miniapp.es.js',
+                format: 'es',
+            }
+        ]
     },
 ];
 

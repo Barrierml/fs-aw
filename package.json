@@ -1,9 +1,14 @@
 {
   "name": "fs-aw",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "File system abstraction layer for the browser, Node, miniapp",
-  "main": "/dist/index.js",
+  "main": "index.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Barrierml/fs-aw"
+  },
+  "homepage": "https://github.com/Barrierml/fs-aw",
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
     "dev": "rollup -c ./rollup.config.js -w",
@@ -11,7 +16,12 @@
     "test:ci": "karmatic --files 'test/**.test.js' --coverage true"
   },
   "keywords": [
-    "fs"
+    "fs",
+    "file",
+    "file-system",
+    "browser",
+    "node",
+    "miniapp"
   ],
   "author": "shiroha",
   "license": "ISC",
