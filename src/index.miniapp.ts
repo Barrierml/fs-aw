@@ -44,9 +44,9 @@ const getFullName = (fileName: string) => {
 
 const readFile = async (fileName: string, encoding?: EncodingStringType) => {
     asserAbsolutePath(fileName);
-    const fs = getFileSystemManager();
+    const fsMgr = getFileSystemManager();
     return new Promise((resolve, fail) => {
-        fs.readFile({
+        fsMgr.readFile({
             filePath: getFullName(fileName),
             encoding,
             success: (res) => {
@@ -59,12 +59,12 @@ const readFile = async (fileName: string, encoding?: EncodingStringType) => {
 
 const writeFile = async (fileName: string, data: any): Promise<boolean> => {
     asserAbsolutePath(fileName);
-    const fs = getFileSystemManager();
+    const fsMgr = getFileSystemManager();
     if (!(data instanceof ArrayBuffer)) {
         data = String(data);
     }
     return new Promise((resolve, fail) => {
-        fs.writeFile({
+        fsMgr.writeFile({
             filePath: getFullName(fileName),
             data,
             success: () => {
@@ -77,9 +77,9 @@ const writeFile = async (fileName: string, data: any): Promise<boolean> => {
 
 const removeFile = async (fileName: string): Promise<boolean> => {
     asserAbsolutePath(fileName);
-    const fs = getFileSystemManager();
+    const fsMgr = getFileSystemManager();
     return new Promise((resolve, fail) => {
-        fs.unlink({
+        fsMgr.unlink({
             filePath: getFullName(fileName),
             success: () => {
                 resolve(true);
@@ -95,10 +95,10 @@ declare interface readdir {
 }
 const readdir = async (dirName: string, options?: { withFileTypes: boolean }) => {
     asserAbsolutePath(dirName);
-    const fs = getFileSystemManager();
+    const fsMgr = getFileSystemManager();
     if (options?.withFileTypes) {
         return new Promise((resolve, fail) => {
-            fs.stat({
+            fsMgr.stat({
                 path: getFullName(dirName),
                 recursive: true,
                 success: res => {
@@ -121,7 +121,7 @@ const readdir = async (dirName: string, options?: { withFileTypes: boolean }) =>
     }
 
     return new Promise((resolve, fail) => {
-        fs.readdir({
+        fsMgr.readdir({
             dirPath: getFullName(dirName),
             success: async (res) => {
                 resolve(res.files);
@@ -133,9 +133,9 @@ const readdir = async (dirName: string, options?: { withFileTypes: boolean }) =>
 
 const mkdir = async (dirName: string): Promise<boolean> => {
     asserAbsolutePath(dirName);
-    const fs = getFileSystemManager();
+    const fsMgr = getFileSystemManager();
     return new Promise((resolve, fail) => {
-        fs.mkdir({
+        fsMgr.mkdir({
             dirPath: getFullName(dirName),
             // default recursive
             recursive: true,
@@ -149,9 +149,9 @@ const mkdir = async (dirName: string): Promise<boolean> => {
 
 const rmdir = async (dirName: string): Promise<boolean> => {
     asserAbsolutePath(dirName);
-    const fs = getFileSystemManager();
+    const fsMgr = getFileSystemManager();
     return new Promise((resolve, fail) => {
-        fs.rmdir({
+        fsMgr.rmdir({
             dirPath: getFullName(dirName),
             recursive: true,
             success: () => {
@@ -164,9 +164,9 @@ const rmdir = async (dirName: string): Promise<boolean> => {
 
 const exists = async (fileName: string): Promise<boolean> => {
     asserAbsolutePath(fileName);
-    const fs = getFileSystemManager();
+    const fsMgr = getFileSystemManager();
     return new Promise((resolve) => {
-        fs.access({
+        fsMgr.access({
             path: getFullName(fileName),
             success: () => {
                 resolve(true);
@@ -180,9 +180,9 @@ const exists = async (fileName: string): Promise<boolean> => {
 
 const stat = async (fileName: string): Promise<Stat> => {
     asserAbsolutePath(fileName);
-    const fs = getFileSystemManager();
+    const fsMgr = getFileSystemManager();
     return new Promise((resolve, fail) => {
-        fs.stat({
+        fsMgr.stat({
             path: getFullName(fileName),
             success: (res) => {
                 resolve(res);
@@ -191,8 +191,6 @@ const stat = async (fileName: string): Promise<Stat> => {
         });
     });
 }
-
-
 
 export {
     readFile,
