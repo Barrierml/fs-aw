@@ -16,11 +16,13 @@ npm install fs-aw
 
 
 > ⚠️注意：`fs-aw` 因为跨平台统一api的原因，只支持异步调用！
+
+
 > `fs-aw`设计为按需引入，请根据你当前的平台自行选择抽象层，所有平台的API行为均一致
 ### 在H5项目中使用
 ```js
 // 主文件默认导出为web平台
-import * as fsAw from 'fs-aw/dist/index.miniapp';
+import * as fsAw from 'fs-aw';
 const main = async () => {
     await fsAw.writeFile('/test/test.txt', 123);
     const content = await fsAw.readFile('/test/test.txt', 'utf8');
