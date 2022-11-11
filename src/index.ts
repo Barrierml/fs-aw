@@ -5,17 +5,17 @@ const DB_NAME = window.location.host + '_filesystem';
 const OS_NAME = 'files';
 const DIR_IDX = 'dir';
 
-enum InitOSType {
+const enum InitOSType {
   READONLY = 'readonly',
   READWRITE = 'readwrite',
 }
 
-enum OSObjectType {
+const enum OSObjectType {
   file = 'file',
   directory = 'directory',
 }
 
-export enum EncodingType {
+export const enum EncodingType {
   utf8 = 'utf8',
   'utf-8' = 'utf-8',
   base64 = 'base64',
