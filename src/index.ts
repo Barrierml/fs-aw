@@ -148,7 +148,7 @@ const removeFile = async (fileName: string): Promise<boolean> => {
   });
 };
 
-const readdir = async (directoryName: string, options?: { withFileTypes?: boolean }): Promise<Stat [] | string []> => {
+const readdir = async (directoryName: string, options?: { withFileTypes?: boolean }): Promise<BasicStat[] | string[]> => {
   asserAbsolutePath(directoryName);
   const dir = path.withTrailingSlash(directoryName);
 
@@ -181,12 +181,22 @@ const readdir = async (directoryName: string, options?: { withFileTypes?: boolea
   });
 };
 
-export interface Stat {
+export interface BasicStat {
   isFile(): boolean;
   isDirectory(): boolean;
 }
 
-const stat = async (filePath: string): Promise<Stat | null> => {
+export interface Stat extends BasicStat {
+    /** 文件大小，单位：B */
+    size: number;
+    /** 文件最近一次被存取或被执行的时间 */
+    lastAccessedTime: number;
+    /** 文件最后一次被修改的时间 */
+    lastModifiedTime: number;
+}
+
+
+const stat = async (filePath: string): Promise<BasicStat | null> => {
   asserAbsolutePath(filePath);
   const os = await initOS(InitOSType.READONLY);
   const req = os.get(filePath);

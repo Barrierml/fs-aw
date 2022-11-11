@@ -90,8 +90,8 @@ const removeFile = async (fileName: string): Promise<boolean> => {
 }
 
 declare interface readdir {
-    (dirName: string, options: { withFileTypes: true }): Promise<{ isDirectory(): boolean; isFile(): boolean } []>;
-    (dirName: string): Promise<string []>; 
+    (dirName: string, options: { withFileTypes: true }): Promise<{ isDirectory(): boolean; isFile(): boolean }[]>;
+    (dirName: string): Promise<string[]>;
 }
 const readdir = async (dirName: string, options?: { withFileTypes: boolean }) => {
     asserAbsolutePath(dirName);
@@ -103,16 +103,16 @@ const readdir = async (dirName: string, options?: { withFileTypes: boolean }) =>
                 recursive: true,
                 success: res => {
                     const fileList = Object.keys(res.stats)
-                    // filter self
-                    .filter((itemPath) => itemPath !== '/')
-                    .map((itemPath) => {
-                        const item = res.stats[itemPath];
-                        return {
-                            path: itemPath,
-                            isDirectory: item?.isDirectory.bind(item),
-                            isFile: item?.isFile.bind(item),
-                        }
-                    });
+                        // filter self
+                        .filter((itemPath) => itemPath !== '/')
+                        .map((itemPath) => {
+                            const item = res.stats[itemPath];
+                            return {
+                                path: itemPath,
+                                isDirectory: item?.isDirectory.bind(item),
+                                isFile: item?.isFile.bind(item),
+                            }
+                        });
                     resolve(fileList);
                 },
                 fail,
@@ -192,6 +192,29 @@ const stat = async (fileName: string): Promise<Stat> => {
     });
 }
 
+interface MiniAppStatQueryResult {
+    stats: Stat;
+}
+
+const calcUsedDiskSizeForDir = (dirName: string) => {
+    asserAbsolutePath(dirName);
+    const fsMgr = getFileSystemManager();
+    return new Promise((resolve, fail) => {
+        fsMgr.stat({
+            path: getFullName(dirName),
+            recursive: true,
+            success: (res: MiniAppStatQueryResult | MiniAppStatQueryResult[]) => {
+                let localStats = Array.isArray(res) ? res : [res];
+                const size = localStats.filter(({ stats }) => stats.size > 0)
+                    .map(({ stats }) => stats.size)
+                    .reduce((sum, item) => sum + item, 0);
+                resolve(size);
+            },
+            fail,
+        });
+    });
+}
+
 export {
     readFile,
     writeFile,
@@ -201,4 +224,5 @@ export {
     rmdir,
     exists,
     stat,
+    calcUsedDiskSizeForDir,
 };
