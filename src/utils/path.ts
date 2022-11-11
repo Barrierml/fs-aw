@@ -1,6 +1,10 @@
+import { invariant } from ".";
+
 // copy by https://github.com/browserify/path-browserify/blob/872fec31a8bac7b9b43be0e54ef3037e0202c5fb/index.js#L293
 const dirname = (path: string) => {
-    if (path.length === 0) return '.';
+    if (typeof path !== 'string' || path.length === 0) {
+        return '.';
+    }
     var code = path.charCodeAt(0);
     var hasRoot = code === 47;
     var end = -1;
@@ -21,14 +25,16 @@ const dirname = (path: string) => {
     if (hasRoot && end === 1) return '//';
     return path.slice(0, end);
 }
-const basename = (path: string, ext?: string) => {
-    if (ext !== undefined && typeof ext !== 'string') throw new TypeError('"ext" argument must be a string');
+const basename = (path: string, ext: string) => {
+    invariant(typeof path !== 'string', '"path" argument must be a string');
+    invariant(typeof ext !== 'string', '"ext" argument must be a string');
+
     var start = 0;
     var end = -1;
     var matchedSlash = true;
     var i;
 
-    if (ext !== undefined && ext.length > 0 && ext.length <= path.length) {
+    if (ext.length > 0 && ext.length <= path.length) {
         if (ext.length === path.length && ext === path) return '';
         var extIdx = ext.length - 1;
         var firstNonSlashEnd = -1;
@@ -91,6 +97,7 @@ const basename = (path: string, ext?: string) => {
 }
 
 const withTrailingSlash = (path: string) => {
+    invariant(typeof path !== 'string', '"path" argument must be a string');
     const directoryWithTrailingSlash = path[path.length - 1] === '/'
         ? path
         : path + '/';
