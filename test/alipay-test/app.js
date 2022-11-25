@@ -1,3 +1,4 @@
+import './miniapp.test.pure'
 App({
   onLaunch(options) {
     // 第一次打开

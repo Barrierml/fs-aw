@@ -25,16 +25,16 @@ const dirname = (path: string) => {
     if (hasRoot && end === 1) return '//';
     return path.slice(0, end);
 }
-const basename = (path: string, ext: string) => {
+const basename = (path: string, ext?: string) => {
     invariant(typeof path !== 'string', '"path" argument must be a string');
-    invariant(typeof ext !== 'string', '"ext" argument must be a string');
+    invariant(ext !== undefined && typeof ext !== 'string', '"ext" argument must be a string');
 
     var start = 0;
     var end = -1;
     var matchedSlash = true;
     var i;
 
-    if (ext.length > 0 && ext.length <= path.length) {
+    if (ext && ext.length > 0 && ext.length <= path.length) {
         if (ext.length === path.length && ext === path) return '';
         var extIdx = ext.length - 1;
         var firstNonSlashEnd = -1;

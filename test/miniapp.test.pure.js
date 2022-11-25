@@ -1,5 +1,5 @@
 // this test file need run in miniapp
-import * as fsAw from '../../../../dist/miniapp';
+import * as fsAw from 'fs-aw';
 
 const describe = (name, fun) => {
     console.log(`%c${name}`, 'color: #43bb88;font-size: 24px;font-weight: bold;text-decoration: underline;');

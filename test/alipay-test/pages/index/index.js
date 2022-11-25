@@ -1,4 +1,4 @@
-import './miniapp.test.pure'
+
 Page({
   onLoad(query) {
     // 页面加载

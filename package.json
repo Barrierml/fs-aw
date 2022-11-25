@@ -11,11 +11,6 @@
       "import": "./dist/index.es.js",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    },
-    "miniapp": {
-      "import": "./dist/index.miniapp.es.js",
-      "require": "./dist/index.miniapp.js",
-      "types": "./dist/index.miniapp.d.ts"
     }
   },
   "repository": {

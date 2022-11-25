@@ -1,38 +1,66 @@
-import { webFs as fsAw } from '../dist/index.es';
-import * as assert from 'assert';
+// this test file need run in miniapp
+import { miniFs as fsAw } from '../../dist/index.es';
 
-describe('fs-aw-web', () => {
+const describe = (name, fun) => {
+    console.log(`%c${name}`, 'color: #43bb88;font-size: 24px;font-weight: bold;text-decoration: underline;');
+    fun();
+}
+
+let nowTask = Promise.resolve();
+
+const it = (name, fun) => {
+    nowTask = nowTask.then(() => fun())
+        .then(() => {
+            console.log(`%c${name} success`, 'color: #43bb88;font-size: 18px;');
+        })
+        .catch((e) => {
+            console.log(`%c${name} failed`, 'color: red;font-size: 18px;');
+            console.error(e);
+        });;
+}
+
+const assert = {
+    equal: (a, b) => {
+        if (a !== b) {
+            throw new Error(`assert equal failed, ${a} !== ${b}`);
+        }
+    }
+}
+
+describe('fs-aw-web', async () => {
+    try {
+        await fsAw.rmdir('/');
+    } catch (e) {
+        console.log('删除失败', e);
+    }
+
     it('should error not exist', async () => {
         try {
-            await fsAw.readdir('/test');
+            const dir = await fsAw.readdir('/test');
         } catch (e) {
-            assert.equal(e.toString(), "Error: no such directory '/test/'");
+            return;
         }
+        throw new Error('should has error')
     });
 
     it('should be a empty dir', async () => {
-        const exist = await fsAw.exists('/test');
-        assert.equal(exist, false);
-
         await fsAw.mkdir('/test');
         const dir = await fsAw.readdir('/test');
-        const exist1 = await fsAw.exists('/test');
-        assert.equal(exist1, true);
         assert.equal(dir.length, 0);
     });
 
+    it('path should not exist', async () => {
+        const exist = await fsAw.exists('/cc');
+        assert.equal(exist, false);
+    });
 
     it('should create a dir', async () => {
-        await fsAw.mkdir('/test');
-        const exist = await fsAw.exists('/test');
+        await fsAw.mkdir('/newdir');
+        const exist = await fsAw.exists('/newdir');
         assert.equal(exist, true);
     });
 
     it('should create a file', async () => {
-        const exist1 = await fsAw.exists('/test/test.txt');
-        assert.equal(exist1, false);
-
-
         await fsAw.writeFile('/test/test.txt', 'test');
         const exist = await fsAw.exists('/test/test.txt');
         assert.equal(exist, true);
@@ -41,6 +69,7 @@ describe('fs-aw-web', () => {
         assert.equal(content, 'test');
     });
 
+    // this example just can run in real phone
     it('should can write array buffer', async () => {
         const buffer = new ArrayBuffer(8);
         const view = new Uint8Array(buffer);
@@ -52,6 +81,7 @@ describe('fs-aw-web', () => {
         assert.equal(exist, true);
 
         const content = await fsAw.readFile('/test/test.bin');
+        console.log('content', content)
         assert.equal(content.byteLength, 8);
         const view2 = new Uint8Array(content);
         for (let i = 0; i < view2.length; i++) {
@@ -69,7 +99,9 @@ describe('fs-aw-web', () => {
     it('withFileTypes should work', async () => {
         await fsAw.writeFile('/qwer/test.bin', 123);
         await fsAw.mkdir('/qwer/test2');
-        const dir = await fsAw.readdir('/qwer', { withFileTypes: true });
+        const dir = await fsAw.readdir('/qwer', {
+            withFileTypes: true
+        });
         assert.equal(dir.length, 2);
         assert.equal(dir[0].path, '/qwer/test.bin');
         assert.equal(dir[0].name, 'test.bin');

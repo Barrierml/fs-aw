@@ -1,11 +1,11 @@
 # fs-aw
 
 Multiterminal fs abstraction layer
-由`Typescript`编写的一个多平台文件系统抽象层，帮助你在不同的平台，使用同一套逻辑操作文件系统
+由`Typescript`编写的一个多平台文件系统抽象层，帮助你在不同的平台，使用同一套逻辑操作文件系统，默认支持`Tree Shaking`
 
 使用场景
-1. 在使用`Taro` 或者 `uniapp` 开发多平台跨端应用时，碰到一些大文件(大于5MB)的缓存需求，但因为web、小程序、weex等平台的文件操作API，或者是根本没有相关的文件缓存API，一切都需要需要重新设计实现，`fs-aw` 提供了一套行为完全一致的文件系统，借鉴 `node` 的 `fs` 模块实现的前端工具库，帮助你快速的在不同的平台拥有一个文件管理系统。
-2. 补充ing
+1. 需要在 `H5` 或 `小程序` 或 `WEEX` 内存储文件
+2. 在使用`Taro` 或者 `uniapp` 开发多平台跨端应用时，碰到一些大文件(大于5MB)的缓存需求，但因为web、小程序、weex等平台的文件操作API，或者是根本没有相关的文件缓存API，一切都需要需要重新设计实现，`fs-aw` 提供了一套行为完全一致的文件系统，借鉴 `node` 的 `fs` 模块实现的前端工具库，帮助你快速的在不同的平台拥有一个文件管理系统。
 ## 快速开始
 
 ### 安装
@@ -22,10 +22,10 @@ npm install fs-aw
 ### 在H5项目中使用
 ```js
 // 主文件默认导出为web平台
-import * as fsAw from 'fs-aw';
+import { webFs as fs } from 'fs-aw';
 const main = async () => {
-    await fsAw.writeFile('/test/test.txt', 123);
-    const content = await fsAw.readFile('/test/test.txt', 'utf8');
+    await fs.writeFile('/test/test.txt', 123);
+    const content = await fs.readFile('/test/test.txt', 'utf8');
     console.log(content);
 }
 main();
@@ -35,12 +35,10 @@ main();
 ### 在小程序项目中使用
 ```js
 // 引入小程序专用抽象层
-// 推荐使用这种引入写法，如果无法引入则使用第二种引入方法
-// import * as fsAw from 'fs-aw/miniapp';
-import * as fsAw from 'fs-aw/dist/index.miniapp';
+import { miniFs as fs } from 'fs-aw';
 const main = async () => {
-    await fsAw.writeFile('/test/test.txt', 123);
-    const content = await fsAw.readFile('/test/test.txt', 'utf8');
+    await fs.writeFile('/test/test.txt', 123);
+    const content = await fs.readFile('/test/test.txt', 'utf8');
     console.log(content);
 }
 main();
@@ -57,6 +55,7 @@ main();
 | 微信小程序  | ✅ |❌|`FileSystemManager`|
 | 字节小程序  | ✅ |❌|`FileSystemManager`|
 | 百度小程序  | ✅ |❌|`FileSystemManager`|
+| ReactNative|❌| ❌| `暂无`|
 | Weex | ❌| ❌ | `localStorage`|
 | node  | ❌ |❌|`fs`模块|
 

@@ -1,5 +1,5 @@
 import { asserAbsolutePath } from "./utils";
-import type { EncodingStringType, Stat } from './index';
+import type { EncodingStringType, Stat } from './index.web';
 import { getCurrentFactory } from "./utils/miniapp-factory";
 
 interface Factory {

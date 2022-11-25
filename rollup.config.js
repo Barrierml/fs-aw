@@ -25,19 +25,6 @@ const config = [
             },
         ]
     },
-    {
-        input: './src/index.miniapp.ts',
-        output: [
-            {
-                file: './dist/index.miniapp.js',
-                format: 'cjs',
-            },
-            {
-                file: './dist/index.miniapp.es.js',
-                format: 'es',
-            }
-        ]
-    },
 ];
 
 const configs = config.map((item) => {
